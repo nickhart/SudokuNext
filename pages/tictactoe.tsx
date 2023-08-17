@@ -38,7 +38,8 @@ class Board extends React.Component<BoardProps, any> {
   }
 
   render() {
-    const choiceValues = [0, 1, 2, 3];
+    // todo: dynamically configure this
+    const choiceValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const rowValues = [
       [0, 1, 2],
       [3, 4, 5],
@@ -74,8 +75,8 @@ function numberForStep(step: number): number {
   return 0;
 }
 
-function isLegalPlay(cells: Array<number>, i: number): boolean {
-  return !cells[i];
+function isLegalPlay(cells: Array<number>, i: number, choice: number): boolean {
+  return choice ? !cells[i] && !cells.includes(choice) : true;
 }
 
 function isGameOver(cells: Array<number>): boolean {
@@ -111,11 +112,16 @@ class Game extends React.Component<GameProps, any> {
     const current = history[history.length - 1];
     const cells = current.cells.slice();
     if (isGameOver(cells)) {
-      console.log("game is over");
+      console.log("ignoring: game is over");
       return;
     }
-    if (!isLegalPlay(cells, i)) {
-      console.log("not legal play");
+    const currentNumber = this.state.currentNumber;
+    if (cells[i] === currentNumber) {
+      console.log("ignoring: input is unchanged");
+      return;
+    }
+    if (!isLegalPlay(cells, i, currentNumber)) {
+      console.log("ignoring: not a legal play");
       return;
     }
     cells[i] = this.state.currentNumber;
