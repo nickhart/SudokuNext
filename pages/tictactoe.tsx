@@ -12,6 +12,7 @@ type GameState = Array<number>;
 
 interface BoardProps {
   cells: GameState;
+  degree: number;
   onCellClick: (index: number) => void;
   onChoiceClick: (index: number) => void;
 }
@@ -38,28 +39,20 @@ class Board extends React.Component<BoardProps, any> {
   }
 
   render() {
-    // todo: dynamically configure this
-    const choiceValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const rowValues = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-    ];
+    const degree = this.state ? this.state.degree : 2; // todo: fix this
+    const choiceValues = choicesForDegree(degree);
+    const rowValues = rowValuesForDegree(degree);
     return (
       <div>
         <div className="board-row">
           {choiceValues.map((value: number) => this.renderChoice(value))}
         </div>
         <br />
+        { rowValues.map((row: Array<number>) => (
         <div className="board-row">
-          {rowValues[0].map((value: number) => this.renderCell(value))}
-        </div>
-        <div className="board-row">
-          {rowValues[1].map((value: number) => this.renderCell(value))}
-        </div>
-        <div className="board-row">
-          {rowValues[2].map((value: number) => this.renderCell(value))}
-        </div>
+        {row.map((value: number) => this.renderCell(value))}
+      </div>
+        ))}
       </div>
     );
   }
@@ -83,19 +76,48 @@ function isGameOver(cells: Array<number>): boolean {
   return !cells.includes(0);
 }
 
-function newGame(): number[] {
-  return Array(9).fill(0);
+function newGameForDegree(degree: number): number[] {
+  return Array(degree*degree*degree*degree).fill(0);
+}
+
+function generateAscendingArray(start: number, length: number): number[] {
+  const result: number[] = [];
+  for (let i = 0; i < length; i++) {
+    result.push(start + i);
+  }
+  return result;
+}
+
+function choicesForDegree(degree: number): Array<number> {
+  const length = degree*degree+1;
+  return Array.from({ length }, (_, index) => index);
+}
+
+// function rowSliceForDegree(start: number, degree: number) {
+//   return generateAscendingArray(start, degree*degree);
+// }
+
+function rowValuesForDegree(degree: number) {
+  let result = [];
+  const size = degree*degree;
+  for (let i = 0; i < size; i++) {
+    result.push(generateAscendingArray(i * size, size));
+  }
+  console.log(`rowValues: ${result}`);
+  return result;
 }
 
 class Game extends React.Component<GameProps, any> {
   constructor(props: any) {
+    const degree = 2;
     super(props);
     this.state = {
       history: [
         {
-          cells: newGame(),
+          cells: newGameForDegree(degree),
         },
       ],
+      degree: degree,
       stepNumber: 0,
       currentNumber: 0,
     };
@@ -144,6 +166,7 @@ class Game extends React.Component<GameProps, any> {
   }
 
   render() {
+    const degree = this.state.degree;
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const gameOver = isGameOver(current.cells);
@@ -169,6 +192,7 @@ class Game extends React.Component<GameProps, any> {
         <div className="game-board">
           <Board
             cells={current.cells}
+            degree={degree}
             onCellClick={(i) => this.handleCellClick(i)}
             onChoiceClick={(i) => this.handleChoiceClick(i)}
           />
