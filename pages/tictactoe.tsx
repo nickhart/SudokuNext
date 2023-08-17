@@ -1,5 +1,4 @@
 import React, { MouseEvent } from "react";
-// import { assert } from 'console'
 
 function Cell(props: any) {
   return (
@@ -75,24 +74,12 @@ function numberForStep(step: number): number {
   return 0;
 }
 
-function calculateWinner(cells: Array<number>) {
-  // const lines = [
-  //   [0, 1, 2],
-  //   [3, 4, 5],
-  //   [6, 7, 8],
-  //   [0, 3, 6],
-  //   [1, 4, 7],
-  //   [2, 5, 8],
-  //   [0, 4, 8],
-  //   [2, 4, 6],
-  // ];
-  // for (let i = 0; i < lines.length; i++) {
-  //   const [a, b, c] = lines[i];
-  //   if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-  //     return cells[a];
-  //   }
-  // }
-  return null;
+function isLegalPlay(cells: Array<number>, i: number): boolean {
+  return !cells[i];
+}
+
+function isGameOver(cells: Array<number>): boolean {
+  return !cells.includes(0);
 }
 
 function newGame(): number[] {
@@ -123,7 +110,12 @@ class Game extends React.Component<GameProps, any> {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const cells = current.cells.slice();
-    if (calculateWinner(cells) || cells[i]) {
+    if (isGameOver(cells)) {
+      console.log("game is over");
+      return;
+    }
+    if (!isLegalPlay(cells, i)) {
+      console.log("not legal play");
       return;
     }
     cells[i] = this.state.currentNumber;
@@ -148,7 +140,7 @@ class Game extends React.Component<GameProps, any> {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.cells);
+    const gameOver = isGameOver(current.cells);
 
     const moves = history.map((step: any, move: React.Key) => {
       const desc = move ? "Go to move #" + move : "Go to game start";
@@ -160,7 +152,7 @@ class Game extends React.Component<GameProps, any> {
     });
 
     let status;
-    if (winner) {
+    if (gameOver) {
       status = "Winner!";
     } else {
       status = "current number: " + this.state.currentNumber;
