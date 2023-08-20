@@ -1,8 +1,3 @@
-export function choicesForDegree(degree: number): Array<number> {
-  const length = degree * degree + 1;
-  return Array.from({ length }, (_, index) => index);
-}
-
 export function generateAscendingArray(
   start: number,
   length: number,
@@ -22,6 +17,5 @@ export function rowValuesForDegree(degree: number) {
   for (let i = 0; i < size; i++) {
     result.push(generateAscendingArray(i * size, size));
   }
-  console.log(`rowValues: ${result}`);
   return result;
 }

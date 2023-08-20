@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
   choicesForDegree,
@@ -15,10 +15,6 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const [degree, setDegree] = useState(startDegree);
   const [stepNumber, setStepNumber] = useState(0);
   const [currentNumber, setCurrentNumber] = useState(0);
-
-  useEffect(() => {
-    console.log(`Degree updated: ${degree}`);
-  }, [degree]);
 
   function handleCellClick(index: number) {
     const current = history[history.length - 1];
