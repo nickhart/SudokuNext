@@ -1,8 +1,8 @@
 import { generateAscendingArray } from "./BoardUtils";
 
 export function choicesForDegree(degree: number): Array<number> {
-  const length = degree * degree + 1;
-  return Array.from({ length }, (_, index) => index);
+  const length = degree * degree;
+  return Array.from({ length }, (_, index) => index+1);
 }
 
 function rowAndColumnFromIndex(index: number, degree: number) {

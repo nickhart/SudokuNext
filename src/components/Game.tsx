@@ -17,13 +17,13 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const [currentNumber, setCurrentNumber] = useState(0);
 
   function handleCellClick(index: number) {
-    const current = history[history.length - 1];
+    const current = history[stepNumber]; //  history.length - 1
     const cells = current.cells.slice(); // making a copy of cells
 
-    if (isGameOver(cells)) {
-      console.log("ignoring: game is over");
-      return;
-    }
+    // if (isGameOver(cells)) {
+    //   console.log("ignoring: game is over");
+    //   return;
+    // }
 
     if (cells[index] === currentNumber) {
       console.log("ignoring: input is unchanged");
@@ -68,6 +68,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const degrees =
     stepNumber === 0 ? (
       <div>
+        change board:
         <button onClick={() => changeDegree(2)}>4x4</button>
         <button onClick={() => changeDegree(3)}>9x9</button>
       </div>
@@ -104,6 +105,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
         />
       </div>
       <div className="game-controls">
+      <br/>
         {choices}
         {degrees}
       </div>
