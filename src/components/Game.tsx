@@ -1,108 +1,119 @@
-import React, { MouseEvent } from "react";
-import { GameProps } from "../model/GameProps";
+import React, { useState } from "react";
+
 import {
+  choicesForDegree,
   newGameForDegree,
   isGameOver,
   isLegalPlay,
 } from "../utils/SudokuUtils";
 import { Board } from "./Board";
 
-export class Game extends React.Component<GameProps, any> {
-  constructor(props: any) {
-    const degree = 2;
-    super(props);
-    this.state = {
-      history: [
-        {
-          cells: newGameForDegree(degree),
-        },
-      ],
-      degree: degree,
-      stepNumber: 0,
-      currentNumber: 0,
-    };
-  }
+export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
+  const [history, setHistory] = useState([
+    { cells: newGameForDegree(startDegree) },
+  ]);
+  const [degree, setDegree] = useState(startDegree);
+  const [stepNumber, setStepNumber] = useState(0);
+  const [currentNumber, setCurrentNumber] = useState(0);
 
-  handleChoiceClick(i: number) {
-    this.setState({
-      currentNumber: i,
-    });
-  }
+  function handleCellClick(index: number) {
+    const localHistory = history.slice(0, stepNumber + 1);
+    const current = localHistory[stepNumber]; //  history.length - 1
+    const cells = current.cells.slice(); // making a copy of cells
 
-  handleCellClick(i: number) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const cells = current.cells.slice();
-    const degree = this.state.degree;
-    if (isGameOver(cells)) {
-      console.log("ignoring: game is over");
-      return;
-    }
-    const currentNumber = this.state.currentNumber;
-    if (cells[i] === currentNumber) {
+    // if (isGameOver(cells)) {
+    //   console.log("ignoring: game is over");
+    //   return;
+    // }
+
+    if (cells[index] === currentNumber) {
       console.log("ignoring: input is unchanged");
       return;
     }
-    if (!isLegalPlay(cells, i, currentNumber, degree)) {
+
+    if (!isLegalPlay(cells, index, currentNumber, degree)) {
       console.log("ignoring: not a legal play");
       return;
     }
-    cells[i] = this.state.currentNumber;
-    this.setState({
-      history: history.concat([
-        {
-          cells: cells,
-        },
-      ]),
-      stepNumber: history.length,
-      currentNumber: this.state.currentNumber,
-    });
+
+    cells[index] = currentNumber;
+    setHistory(localHistory.concat([{ cells: cells }]));
+    setStepNumber(localHistory.length);
   }
 
-  jumpTo(step: number) {
-    this.setState({
-      stepNumber: step,
-      currentNumber: 0, // reset the selected number when jumping steps
-    });
+  function jumpTo(step: number) {
+    setStepNumber(step);
+    setCurrentNumber(0); // reset the selected number when jumping steps
   }
 
-  render() {
-    const degree = this.state.degree;
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const gameOver = isGameOver(current.cells);
-
-    const moves = history.map((step: any, move: React.Key) => {
-      const desc = move ? "Go to move #" + move : "Go to game start";
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(Number(move))}>{desc}</button>
-        </li>
-      );
-    });
-
-    let status;
-    if (gameOver) {
-      status = "Winner!";
-    } else {
-      status = "current number: " + this.state.currentNumber;
+  function changeDegree(newDegree: number) {
+    // don't change if a game is in progress or is already set accordingly
+    if (stepNumber === 0 && degree != newDegree) {
+      setHistory([{ cells: newGameForDegree(newDegree) }]);
+      setDegree(newDegree);
     }
-
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            cells={current.cells}
-            degree={degree}
-            onCellClick={(i) => this.handleCellClick(i)}
-            onChoiceClick={(i) => this.handleChoiceClick(i)}
-          />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-        </div>
-      </div>
-    );
   }
-}
+
+  const current = history[stepNumber];
+  const gameOver = isGameOver(current.cells);
+
+  const moves = history.map((step: any, move: React.Key) => {
+    const desc = move ? "Go to move #" + move : "Go to game start";
+    return (
+      <li key={move}>
+        <button onClick={() => jumpTo(Number(move))}>{desc}</button>
+      </li>
+    );
+  });
+
+  const degrees =
+    stepNumber === 0 ? (
+      <div>
+        change board:
+        <button onClick={() => changeDegree(2)}>4x4</button>
+        <button onClick={() => changeDegree(3)}>9x9</button>
+      </div>
+    ) : (
+      ""
+    );
+
+  function renderChoice(index: number) {
+    const key = `choice_${index}`;
+    return <button onClick={() => setCurrentNumber(index)}>{index}</button>;
+  }
+
+  const choiceValues = choicesForDegree(degree);
+  const choices = (
+    <div className="choice-row">
+      {choiceValues.map((value: number) => renderChoice(value))}
+    </div>
+  );
+
+  let status;
+  if (gameOver) {
+    status = "Winner!";
+  } else {
+    status = "current number: " + currentNumber;
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          cells={current.cells}
+          degree={degree}
+          onClick={(i) => handleCellClick(i)}
+        />
+      </div>
+      <div className="game-controls">
+      <br/>
+        {choices}
+        {degrees}
+      </div>
+      <div className="game-history">
+        <div>{status}</div>
+        <ol>{moves}</ol>
+      </div>
+    </div>
+  );
+};
