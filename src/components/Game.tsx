@@ -17,7 +17,8 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const [currentNumber, setCurrentNumber] = useState(0);
 
   function handleCellClick(index: number) {
-    const current = history[stepNumber]; //  history.length - 1
+    const localHistory = history.slice(0, stepNumber + 1);
+    const current = localHistory[stepNumber]; //  history.length - 1
     const cells = current.cells.slice(); // making a copy of cells
 
     // if (isGameOver(cells)) {
@@ -36,8 +37,8 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     }
 
     cells[index] = currentNumber;
-    setHistory(history.concat([{ cells: cells }]));
-    setStepNumber(history.length);
+    setHistory(localHistory.concat([{ cells: cells }]));
+    setStepNumber(localHistory.length);
   }
 
   function jumpTo(step: number) {
