@@ -20,14 +20,14 @@ export const Board: React.FC<{
   function renderChoice(index: number) {
     const key = `choice.${index}`;
     return (
-      <Cell value={index} key={key} onClick={() => onChoiceClick(index)} />
+      <Cell value={index} key={key} customCss="my-2 bg-gray-400" onClick={() => onChoiceClick(index)} />
     );
   }
 
   const rowValues = rowValuesForDegree(degree);
   const size = degree * degree;
-  // todo: fix the variable grid sizing
-  const gridCss = `grid grid-cols-${size} gap-1 max-w-fit`
+  // todo: fix the variable grid sizing... this was totally breaking when trying to format the css string
+  const gridCss = `grid ${size === 4 ? "grid-cols-4" : "grid-cols-9"} gap-1 max-w-fit`;
   return (
     <div className={gridCss}>
       {Array.from({ length: size * size }).map((_, index) => renderCell(index))}
