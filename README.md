@@ -13,6 +13,7 @@ Started with an example React tic-tac-toe app, converted it to typescript, turne
 
 * background colors
 * hover states
+* colors
 * show conflicts/errors/contraints?
 * annotations
 * hints
