@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import {
-  choicesForDegree,
   newGameForDegree,
   isGameOver,
   isLegalPlay,
@@ -68,7 +67,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
 
   const degrees =
     stepNumber === 0 ? (
-      <div>
+      <div className="m-2">
         change board:
         <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
         <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
@@ -76,19 +75,6 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     ) : (
       ""
     );
-
-  function renderChoice(index: number) {
-    const key = `choice.${index}`;
-    return <button  className="w-10 h-10 bg-gray-400" key={key} onClick={() => setCurrentNumber(index)}>{index}</button>;
-  }
-
-  const choiceValues = choicesForDegree(degree);
-  const size = degree*degree;
-  const choices = (
-    <div className={`grid grid-cols-${size} gap-1 max-w-fit my-4`}>
-      { choiceValues.map((value: number) => renderChoice(value)) }
-    </div>
-  );
 
   let status;
   if (gameOver) {
@@ -102,10 +88,10 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
         <Board
           cells={current.cells}
           degree={degree}
-          onClick={(i) => handleCellClick(i)}
+          onCellClick={(i) => handleCellClick(i)}
+          onChoiceClick={(i) => setCurrentNumber(i)}
         />
       <div>
-        {choices}
         {degrees}
       </div>
       <div>
