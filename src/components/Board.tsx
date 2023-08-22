@@ -10,10 +10,11 @@ export const Board: React.FC<{
 }> = ({ degree, cells, onClick }) => {
 
   function renderCell(index: number) {
+    const key = `cell.${index}`;
     return (
       <Cell
         value={cells[index]}
-        key={index}
+        key={key}
         onClick={() => onClick(index)}
       />
     );
@@ -22,8 +23,8 @@ export const Board: React.FC<{
   const rowValues = rowValuesForDegree(degree);
   return (
     <div>
-      {rowValues.map((row: Array<number>) => (
-        <div className="board-row">
+      {rowValues.map((row: Array<number>, index: number) => (
+        <div className="board-row" key={`row.${index}`}>
           {row.map((value: number) => renderCell(value))}
         </div>
       ))}

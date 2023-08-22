@@ -70,16 +70,16 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     stepNumber === 0 ? (
       <div>
         change board:
-        <button onClick={() => changeDegree(2)}>4x4</button>
-        <button onClick={() => changeDegree(3)}>9x9</button>
+        <button key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
+        <button key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
       </div>
     ) : (
       ""
     );
 
   function renderChoice(index: number) {
-    const key = `choice_${index}`;
-    return <button onClick={() => setCurrentNumber(index)}>{index}</button>;
+    const key = `choice.${index}`;
+    return <button key={key} onClick={() => setCurrentNumber(index)}>{index}</button>;
   }
 
   const choiceValues = choicesForDegree(degree);
