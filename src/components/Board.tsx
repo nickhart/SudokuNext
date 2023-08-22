@@ -8,38 +8,18 @@ export const Board: React.FC<{
   cells: GameState;
   onClick: (index: number) => void;
 }> = ({ degree, cells, onClick }) => {
-
   function renderCell(index: number) {
     const key = `cell.${index}`;
     return (
-      <Cell
-        value={cells[index]}
-        key={key}
-        onClick={() => onClick(index)}
-      />
+      <Cell value={cells[index]} key={key} onClick={() => onClick(index)} />
     );
   }
 
   const rowValues = rowValuesForDegree(degree);
+  const size = degree * degree;
   return (
-    <div className="grid grid-cols-4 gap-4">
-    {Array.from({ length: 16 }).map((_, index) => 
-    (
-      <div
-        key={`cell.${index}`}
-        className="w-16 h-16 bg-blue-500 flex items-center justify-center"
-      >
-        {index + 1  /** renderCell(index) */  }
-      </div>
-    )
-    )}
-  </div>    
-    // <div className="grid grid-cols-4 gap-4">
-    //   {rowValues.map((row: Array<number>, index: number) => (
-    //     <div className="board-row" key={`row.${index}`}>
-    //       {row.map((value: number) => renderCell(value))}
-    //     </div>
-    //   ))}
-    // </div>
+    <div className={`grid grid-cols-${size} gap-1 max-w-fit`}>
+      {Array.from({ length: size * size }).map((_, index) => renderCell(index))}
+    </div>
   );
 };

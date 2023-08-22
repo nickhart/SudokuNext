@@ -5,7 +5,7 @@ export const Cell: React.FC<{
   onClick: (index: number) => void;
 }> = ({ value, onClick }) => {
   return (
-    <button className="w-16 h-16 bg-blue-500 flex items-center justify-center" onClick={() => onClick(value)}>
+    <button className="w-10 h-10 bg-gray-200" onClick={() => onClick(value)}>
       {value}
     </button>
   );

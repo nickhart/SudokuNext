@@ -61,7 +61,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     const desc = move ? "Go to move #" + move : "Go to game start";
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(Number(move))}>{desc}</button>
+        <button className="bg-gray-400 m-1 p-2" onClick={() => jumpTo(Number(move))}>{desc}</button>
       </li>
     );
   });
@@ -70,8 +70,8 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     stepNumber === 0 ? (
       <div>
         change board:
-        <button key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
-        <button key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
+        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
+        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
       </div>
     ) : (
       ""
@@ -79,13 +79,14 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
 
   function renderChoice(index: number) {
     const key = `choice.${index}`;
-    return <button key={key} onClick={() => setCurrentNumber(index)}>{index}</button>;
+    return <button  className="w-10 h-10 bg-gray-400" key={key} onClick={() => setCurrentNumber(index)}>{index}</button>;
   }
 
   const choiceValues = choicesForDegree(degree);
+  const size = degree*degree;
   const choices = (
-    <div className="choice-row">
-      {choiceValues.map((value: number) => renderChoice(value))}
+    <div className={`grid grid-cols-${size} gap-1 max-w-fit my-4`}>
+      { choiceValues.map((value: number) => renderChoice(value)) }
     </div>
   );
 
@@ -97,14 +98,13 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   }
 
   return (
-    <>
+    <div className="m-10">
         <Board
           cells={current.cells}
           degree={degree}
           onClick={(i) => handleCellClick(i)}
         />
       <div>
-      <br/>
         {choices}
         {degrees}
       </div>
@@ -112,6 +112,6 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
         <div>{status}</div>
         <ol>{moves}</ol>
       </div>
-    </>
+    </div>
   );
 };
