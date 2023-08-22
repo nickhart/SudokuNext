@@ -97,23 +97,21 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   }
 
   return (
-    <div className="game">
-      <div className="game-board">
+    <>
         <Board
           cells={current.cells}
           degree={degree}
           onClick={(i) => handleCellClick(i)}
         />
-      </div>
-      <div className="game-controls">
+      <div>
       <br/>
         {choices}
         {degrees}
       </div>
-      <div className="game-history">
+      <div>
         <div>{status}</div>
         <ol>{moves}</ol>
       </div>
-    </div>
+    </>
   );
 };

@@ -22,12 +22,24 @@ export const Board: React.FC<{
 
   const rowValues = rowValuesForDegree(degree);
   return (
-    <div>
-      {rowValues.map((row: Array<number>, index: number) => (
-        <div className="board-row" key={`row.${index}`}>
-          {row.map((value: number) => renderCell(value))}
-        </div>
-      ))}
-    </div>
+    <div className="grid grid-cols-4 gap-4">
+    {Array.from({ length: 16 }).map((_, index) => 
+    (
+      <div
+        key={`cell.${index}`}
+        className="w-16 h-16 bg-blue-500 flex items-center justify-center"
+      >
+        {index + 1  /** renderCell(index) */  }
+      </div>
+    )
+    )}
+  </div>    
+    // <div className="grid grid-cols-4 gap-4">
+    //   {rowValues.map((row: Array<number>, index: number) => (
+    //     <div className="board-row" key={`row.${index}`}>
+    //       {row.map((value: number) => renderCell(value))}
+    //     </div>
+    //   ))}
+    // </div>
   );
 };
