@@ -52,7 +52,7 @@ export const Board: React.FC<{
       <Cell
         value={index}
         key={key}
-        weight={300}
+        weight={1}
         onClick={() => onChoiceClick(index)}
       />
     );
