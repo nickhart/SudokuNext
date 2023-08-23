@@ -3,54 +3,73 @@ import React from "react";
 
 import classNames from "classnames";
 
-const cellStylesByIndex: Array<Array<string>> = [
-  ["bg-gray-200 hover:bg-gray-400", "bg-gray-400 hover:bg-gray-600"],
-  ["bg-blue-200 hover:bg-blue-400", "bg-blue-400 hover:bg-blue-600"],
-  ["bg-lime-200 hover:bg-lime-400", "bg-lime-400 hover:bg-lime-600"],
-  ["bg-red-200 hover:bg-red-400", "bg-red-400 hover:bg-red-600"],
-  ["bg-yellow-200 hover:bg-yellow-400", "bg-yellow-400 hover:bg-yellow-600"],
-  ["bg-purple-200 hover:bg-purple-400", "bg-purple-400 hover:bg-purple-600"],
-  ["bg-cyan-200 hover:bg-cyan-400", "bg-cyan-400 hover:bg-cyan-600"],
-  ["bg-orange-200 hover:bg-orange-400", "bg-orange-400 hover:bg-orange-600"],
-  ["bg-teal-200 hover:bg-teal-400", "bg-teal-400 hover:bg-teal-600"],
-  ["bg-pink-200 hover:bg-pink-400", "bg-pink-400 hover:bg-pink-600"],
-  [
-    "bg-emerald-200 hover:bg-emerald-400",
-    "bg-emerald-400 hover:bg-emerald-600",
-  ],
+const colorsByIndexAndWeight: Array<Array<string>> = [
+  ["bg-gray-200", "bg-gray-300", "bg-gray-400"],
+  ["bg-blue-200", "bg-blue-300", "bg-blue-400"],
+  ["bg-lime-200", "bg-lime-300", "bg-lime-400"],
+  ["bg-red-200", "bg-red-300", "bg-red-400"],
+  ["bg-yellow-200", "bg-yellow-300", "bg-yellow-400"],
+  ["bg-purple-200", "bg-purple-300", "bg-purple-400"],
+  ["bg-cyan-200", "bg-cyan-300", "bg-cyan-400"],
+  ["bg-orange-200", "bg-orange-300", "bg-orange-400"],
+  ["bg-teal-200", "bg-teal-300", "bg-teal-400"],
+  ["bg-pink-200", "bg-pink-300", "bg-pink-400"],
+  ["bg-emerald-200", "bg-emerald-300", "bg-emerald-400"],
 ];
 
-function stylesForValue(value: number, weight: number): string {
-  if (value >= 0 && value < cellStylesByIndex.length) {
-    const cellStyles = cellStylesByIndex[value];
+const borderStylesByIndex: Array<string> = [
+  "border-gray-400",
+  "border-blue-400",
+  "border-lime-400",
+  "border-red-400",
+  "border-yellow-400",
+  "border-purple-400",
+  "border-cyan-400",
+  "border-orange-400",
+  "border-teal-400",
+  "border-pink-400",
+  "border-emerald-400",
+];
+
+function colorForValueAndWeight(value: number, weight: number): string {
+  if (value >= 0 && value < colorsByIndexAndWeight.length) {
+    const cellStyles = colorsByIndexAndWeight[value];
     if (weight >= 0 && weight < cellStyles.length) {
       return cellStyles[weight];
     }
   }
-  return "bg-red-600 hover:bg-red-800";
+  return "bg-red-600";
 }
 
 export const Cell: React.FC<{
   value: number;
   weight: number;
   onClick: (index: number) => void;
-  enabled: boolean;
-}> = ({ value, weight, onClick, enabled = false }) => {
+  canClick: boolean;
+  isSelected: boolean;
+}> = ({ value, weight, onClick, canClick, isSelected }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (value: number) => {
-    if (enabled) {
+    if (canClick) {
       onClick(value);
-    }
-    else {
+    } else {
       setIsClicked(true);
       setTimeout(() => setIsClicked(false), 200);
-      }
+    }
   };
 
-  const colorStyles = stylesForValue(value, weight);
+  const color = colorForValueAndWeight(value, weight);
+  const hover = colorForValueAndWeight(value, weight+1);
 
-  const combinedClassName = classNames("w-10 h-10 rounded", colorStyles, isClicked ? 'animate-shake' : '');
+
+  const combinedClassName = classNames(
+    "w-10 h-10 rounded",
+    color,
+    canClick ? "hover:" + hover : "", 
+    isClicked ? "animate-shake" : "",
+    isSelected ? borderStylesByIndex[value] : ""
+  );
 
   return (
     <button className={combinedClassName} onClick={() => handleClick(value)}>
