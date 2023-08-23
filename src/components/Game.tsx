@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import {
-  choicesForDegree,
   newGameForDegree,
   isGameOver,
   isLegalPlay,
@@ -61,33 +60,21 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     const desc = move ? "Go to move #" + move : "Go to game start";
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(Number(move))}>{desc}</button>
+        <button className="bg-gray-400 m-1 p-2" onClick={() => jumpTo(Number(move))}>{desc}</button>
       </li>
     );
   });
 
   const degrees =
     stepNumber === 0 ? (
-      <div>
+      <div className="m-2">
         change board:
-        <button onClick={() => changeDegree(2)}>4x4</button>
-        <button onClick={() => changeDegree(3)}>9x9</button>
+        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
+        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
       </div>
     ) : (
       ""
     );
-
-  function renderChoice(index: number) {
-    const key = `choice_${index}`;
-    return <button onClick={() => setCurrentNumber(index)}>{index}</button>;
-  }
-
-  const choiceValues = choicesForDegree(degree);
-  const choices = (
-    <div className="choice-row">
-      {choiceValues.map((value: number) => renderChoice(value))}
-    </div>
-  );
 
   let status;
   if (gameOver) {
@@ -97,20 +84,17 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   }
 
   return (
-    <div className="game">
-      <div className="game-board">
+    <div className="m-10">
         <Board
           cells={current.cells}
           degree={degree}
-          onClick={(i) => handleCellClick(i)}
+          onCellClick={(i) => handleCellClick(i)}
+          onChoiceClick={(i) => setCurrentNumber(i)}
         />
-      </div>
-      <div className="game-controls">
-      <br/>
-        {choices}
+      <div>
         {degrees}
       </div>
-      <div className="game-history">
+      <div>
         <div>{status}</div>
         <ol>{moves}</ol>
       </div>
