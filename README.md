@@ -11,9 +11,9 @@ Started with an example React tic-tac-toe app, converted it to typescript, turne
 
 ## TODO
 
-* background colors
-* hover states
-* colors
+* templates (enabled partially-filled games)
+* hover states--disable if not clickable
+* more color palattes?
 * show conflicts/errors/contraints?
 * annotations
 * hints
