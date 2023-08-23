@@ -11,8 +11,29 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  extend: {
-    theme: {
+  theme: {
+    extend: {
+      animation: {
+        wiggle: 'wiggle 1s ease-in-out infinite',
+        shake: 'shake 0.5s 1',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        shake: {
+          '0%, 100%': {
+            transform: 'translateX(0)'
+          },
+          '10%,30%,50%,70%,90%' : {
+            transform: 'translateX(-5px)'
+          },
+          '20%,40%,60%,80%': {
+            transform: 'translateX(5px)'
+          }
+        }
+      },
       colors: {
         brown: {
           50: '#fdf8f6',
