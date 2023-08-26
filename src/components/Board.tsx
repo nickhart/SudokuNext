@@ -41,14 +41,16 @@ export const Board: React.FC<{
     const key = `cell.${index}`;
     const weight = weightForIndex(index, degree);
     const canClick = (cells[index] === 0);
+    const isLegal = isLegalPlay(cells, index, currentNumber, degree);
     return (
       <Cell
         value={cells[index]}
         key={key}
         weight={weight}
         onClick={() => onCellClick(index)}
-        canClick={canClick}
+        canClick={canClick && isLegal}
         isSelected={false}
+        currentNumber={currentNumber}
       />
     );
   }
@@ -56,15 +58,16 @@ export const Board: React.FC<{
   function renderChoice(index: number) {
     const key = `choice.${index}`;
     const countInUse = countMatchingElements(cells, index);
-    const canClick = (countInUse < size);
+    const canClick = (countInUse < size) && (currentNumber !== index);
     return (
       <Cell
         value={index}
         key={key}
-        weight={1}
+        weight={0}
         onClick={() => onChoiceClick(index)}
         canClick={canClick}
         isSelected={currentNumber===index}
+        currentNumber={index}
       />
     );
   }
