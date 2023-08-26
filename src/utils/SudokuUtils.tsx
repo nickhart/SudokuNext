@@ -1,5 +1,14 @@
 import { generateAscendingArray } from "./BoardUtils";
 
+export const countMatchingElements = (arr: number[], target: number): number => {
+  return arr.reduce((count, currentElement) => {
+    if (currentElement === target) {
+      return count + 1;
+    }
+    return count;
+  }, 0);
+};
+
 export function choicesForDegree(degree: number): Array<number> {
   const length = degree * degree;
   return Array.from({ length }, (_, index) => index+1);

@@ -88,6 +88,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
         <Board
           cells={current.cells}
           degree={degree}
+          currentNumber={currentNumber}
           onCellClick={(i) => handleCellClick(i)}
           onChoiceClick={(i) => setCurrentNumber(i)}
         />
