@@ -1,4 +1,6 @@
 import { generateAscendingArray } from "./BoardUtils";
+import { templatesForDifficulty } from "src/model/GameTemplate";
+import { GameState } from "src/model/GameState";
 
 export const countMatchingElements = (arr: number[], target: number): number => {
   return arr.reduce((count, currentElement) => {
@@ -75,7 +77,13 @@ export function isGameOver(cells: Array<number>): boolean {
   return !cells.includes(0);
 }
 
-export function newGameForDegree(degree: number): number[] {
+export function newGameForDegree(degree: number): GameState {
+  // todo: remember which ones we've played?
+  // generate our own?
+  const templates = templatesForDifficulty(3, degree);
+  if (templates) {
+    return getRandomElement(templates);
+  }
   return Array(degree * degree * degree * degree).fill(0);
 }
 
@@ -104,4 +112,13 @@ function cellValuesForSquare(row: number, col: number, degree: number) {
     result = result.concat(array);
   }
   return result;
+}
+
+export function getRandomElement<T>(arr: T[]): T | undefined {
+  if (arr.length === 0) {
+    return undefined; // Return undefined for empty arrays
+  }
+
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
