@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { Sudoku } from "../Sudoku";
+import { skip } from 'node:test';
 
 const generateSudoku = function(size) {
     let result = new Sudoku(size);
@@ -8,6 +9,7 @@ const generateSudoku = function(size) {
     for (let index = 0; index != bufferSize; index++) {
         result.cells[index].value = index;
     }
+    result.updateDerivedData();
     return result;
 }
 
@@ -17,22 +19,22 @@ describe("Sudoku", () => {
         let sudoku = generateSudoku(4);
         let row = sudoku.getRow(0);
         for (let i = 0; i != 4; i++) {
-            expect(row[i].value === i);
+            expect(row[i].value).toBe(i);
         }
         
         row = sudoku.getRow(1);
         for (let i = 0; i != 4; i++) {
-            expect(row[i].value === i + 4);
+            expect(row[i].value).toBe(i + 4);
         }
 
         row = sudoku.getRow(2);
         for (let i = 0; i != 4; i++) {
-            expect(row[i].value === i + 8);
+            expect(row[i].value).toBe(i + 8);
         }
 
         row = sudoku.getRow(3);
         for (let i = 0; i != 4; i++) {
-            expect(row[i].value === i + 12);
+            expect(row[i].value).toBe(i + 12);
         }
     });
 
@@ -40,22 +42,22 @@ describe("Sudoku", () => {
         let sudoku = generateSudoku(4);
         let column = sudoku.getColumn(0);
         for (let i = 0; i != 4; i++) {
-            expect(column[i].value === i * 4);
+            expect(column[i].value).toBe(i * 4);
         }
 
         column = sudoku.getColumn(1);
         for (let i = 0; i != 4; i++) {
-            expect(column[i].value === (i * 4) + 1);
+            expect(column[i].value).toBe((i * 4) + 1);
         }
 
         column = sudoku.getColumn(2);
         for (let i = 0; i != 4; i++) {
-            expect(column[i].value === (i * 4) + 2);
+            expect(column[i].value).toBe((i * 4) + 2);
         }
 
         column = sudoku.getColumn(3);
         for (let i = 0; i != 4; i++) {
-            expect(column[i].value === (i * 4) + 3);
+            expect(column[i].value).toBe((i * 4) + 3);
         }
 
     });
@@ -65,22 +67,25 @@ describe("Sudoku", () => {
         let square = sudoku.getSquare(0);
         const expected1 = [0, 1, 4, 5];
         for (let i = 0; i != 4; i++) {
-            expect(square[i].value === expected1[i]);
+            expect(square[i].value).toBe(expected1[i]);
         }
 
+        square = sudoku.getSquare(1);
         const expected2 = [2, 3, 6, 7];
         for (let i = 0; i != 4; i++) {
-            expect(square[i].value === expected2[i]);
+            expect(square[i].value).toBe(expected2[i]);
         }
 
+        square = sudoku.getSquare(2);
         const expected3 = [8, 9, 12, 13];
         for (let i = 0; i != 4; i++) {
-            expect(square[i].value === expected3[i]);
+            expect(square[i].value).toBe(expected3[i]);
         }
 
+        square = sudoku.getSquare(3);
         const expected4 = [10, 11, 14, 15];
         for (let i = 0; i != 4; i++) {
-            expect(square[i].value === expected4[i]);
+            expect(square[i].value).toBe(expected4[i]);
         }
     });
 });
