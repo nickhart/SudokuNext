@@ -30,7 +30,7 @@ function weightForIndex(index: number, degree: number): number {
 
 
 export const Board: React.FC<{
-  degree: number;
+  degree: number; // eg: 2 or 3
   cells: GameState;
   currentNumber: number;
   onCellClick: (index: number) => void;
