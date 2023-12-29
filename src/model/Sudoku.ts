@@ -57,10 +57,7 @@ export class Sudoku {
         const bufferSize = this.size * this.size;
         const maxNumber = strictSize ? this.size : bufferSize; // for testing
 
-        this.stats = new Array<number>(maxNumber);
-        for (let i = 0; i != maxNumber; i++) {
-            this.stats[i] = 0;
-        }
+        this.stats = new Array<number>(maxNumber+1).fill(0);
 
         // iterate through the cells, map them to rows, columns, and squares, and record stats for each number
         let row = 0;
@@ -73,7 +70,6 @@ export class Sudoku {
             this.rows[row][column] = cell;
             this.columns[column][row] = cell;
             this.squares[square][squareIndex] = cell;
-            // console.log(`square [${square}][${squareIndex}] = ${cell.value}`);
             this.stats[cell.value]++;
 
             column++;
@@ -106,5 +102,9 @@ export class Sudoku {
     getSquare(square: number) {
         this.validateIndex(square);
         return this.squares[square];
+    }
+
+    getStats() {
+        return this.stats;
     }
 };
