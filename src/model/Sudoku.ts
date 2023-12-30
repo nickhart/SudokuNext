@@ -99,35 +99,33 @@ export class Sudoku {
         }
       }
     }
+
+    for (let i = 0; i != this.size; i++) {
+      this.rows[i].updateDerivedData();
+      this.columns[i].updateDerivedData();
+      this.squares[i].updateDerivedData();
+    }
+
   }
 
   annotateSingles() {
     for (let i = 0; i != this.size; i++) {
       const row = this.rows[i];
-      let emptyCells = row.findEmptyCells();
-      if (emptyCells.length === 1) {
-        const cell = emptyCells[0];
-        const missingValues = row.findMissingValues();
-        cell.annotations = setBit(cell.annotations, missingValues[0]);
-        console.log(`single found in row ${i}, column: ${cell.column}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
+      if (row.emptyCells.length === 1) {
+        const cell = row.emptyCells[0];
+        cell.annotations = setBit(cell.annotations, row.unusedValues[0]);
       }
 
       const column = this.columns[i];
-      emptyCells = column.findEmptyCells();
-      if (emptyCells.length === 1) {
-        const cell = emptyCells[0];
-        const missingValues = column.findMissingValues();
-        cell.annotations = setBit(cell.annotations, missingValues[0]);
-        console.log(`single found in column ${i}, row: ${cell.row}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
+      if (column.emptyCells.length === 1) {
+        const cell = column.emptyCells[0];
+        cell.annotations = setBit(cell.annotations, column.unusedValues[0]);
       }
 
       const square = this.squares[i];
-      emptyCells = square.findEmptyCells();
-      if (emptyCells.length === 1) {
-        const cell = emptyCells[0];
-        const missingValues = square.findMissingValues();
-        cell.annotations = setBit(cell.annotations, missingValues[0]);
-        console.log(`single found in square ${i}, row: ${cell.row}, column ${cell.column}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
+      if (square.emptyCells.length === 1) {
+        const cell = square.emptyCells[0];
+        cell.annotations = setBit(cell.annotations, square.unusedValues[0]);
       }
     }
   }
