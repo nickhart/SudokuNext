@@ -142,4 +142,22 @@ describe("Sudoku", () => {
             expect(square).toStrictEqual(expectedSquares[i]);
         }
     });
+
+    it("annotates singles in a 9x9 sudoku", () => {
+        const sudoku = importSudoku([
+            0, 0, 0, 3, 0, 9, 0, 0, 6,
+            9, 1, 0, 6, 0, 5, 3, 0, 0,
+            4, 6, 3, 2, 0, 1, 5, 9, 8,
+            0, 3, 0, 0, 1, 8, 0, 0, 5,
+            0, 0, 0, 0, 3, 0, 0, 0, 0,
+            5, 0, 0, 7, 2, 0, 0, 3, 0,
+            3, 9, 4, 8, 0, 2, 7, 5, 1,
+            0, 0, 7, 4, 0, 3, 0, 6, 2,
+            6, 0, 0, 1, 0, 7, 0, 0, 0
+        ]);
+
+        sudoku.annotateSingles();
+        expect(sudoku.getAnnotations(2, 4)).toStrictEqual([7]);
+        expect(sudoku.getAnnotations(6, 4)).toStrictEqual([6]);
+    });
 });
