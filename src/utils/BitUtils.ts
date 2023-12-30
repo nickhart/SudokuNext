@@ -3,15 +3,11 @@ export function bitForPosition(position: number) {
 }
 
 export function testBit(number: number, position: number) {
-    const result = number & bitForPosition(position);
-    console.log(`testBit(${number}, ${position}) => ${result}`);
-    return result;
+    return number & bitForPosition(position);
 }
 
 export function setBit(number: number, position: number) {
-    const result = number | bitForPosition(position);
-    console.log(`setBit(${number}, ${position}) => ${result}`);
-    return result;
+    return number | bitForPosition(position);
 }
 
 export function resetBit(number: number, position: number) {

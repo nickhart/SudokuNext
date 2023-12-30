@@ -5,11 +5,12 @@ import { CellArray } from "./CellArray";
 
 export class Sudoku {
   readonly size: number;
-  cells: Array<Cell> | undefined; // TODO make this a number array
+  readonly cells: Array<Cell> | undefined; // TODO make this a number array
 
   // derived data--we should be able to discard all this and regenerate it with our logic
   // move it into a separate class?
   readonly side: number;
+  // TODO make this stuff readonly?
   rows: Array<CellArray> | undefined;
   columns: Array<CellArray> | undefined;
   squares: Array<CellArray> | undefined;
