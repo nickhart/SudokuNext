@@ -89,43 +89,55 @@ const importSudoku = function (data: Array<number>) {
 describe("Sudoku", () => {
   it("can get the correct row (4x4)", () => {
     const sudoku = generateSudoku(4);
-    let row = sudoku.getRow(0).map((cell) => cell.value);
+    expect(sudoku.cells.length).toStrictEqual(16);
+
+    for (let i = 0; i != 16; i++) {
+      expect(sudoku.cells[i].value).toStrictEqual(i);
+    }
+
+    const row0 = sudoku.rows[0];
+    let cells = row0.cells;
+    let row = cells.map((cell) => cell.value);
     expect(row).toStrictEqual([0, 1, 2, 3]);
-    row = sudoku.getRow(1).map((cell) => cell.value);
+
+    cells = sudoku.rows[1].cells;
+    row = cells.map((cell) => cell.value);
     expect(row).toStrictEqual([4, 5, 6, 7]);
-    row = sudoku.getRow(2).map((cell) => cell.value);
+    cells = sudoku.rows[2].cells;
+    row = cells.map((cell) => cell.value);
     expect(row).toStrictEqual([8, 9, 10, 11]);
-    row = sudoku.getRow(3).map((cell) => cell.value);
+    cells = sudoku.rows[3].cells;
+    row = cells.map((cell) => cell.value);
     expect(row).toStrictEqual([12, 13, 14, 15]);
   });
 
   it("can get the correct column (4x4)", () => {
     const sudoku = generateSudoku(4);
-    let column = sudoku.getColumn(0).map((cell) => cell.value);
+    let column = sudoku.columns[0].cells.map((cell) => cell.value);
     expect(column).toStrictEqual([0, 4, 8, 12]);
-    column = sudoku.getColumn(1).map((cell) => cell.value);
+    column = sudoku.columns[1].cells.map((cell) => cell.value);
     expect(column).toStrictEqual([1, 5, 9, 13]);
-    column = sudoku.getColumn(2).map((cell) => cell.value);
+    column = sudoku.columns[2].cells.map((cell) => cell.value);
     expect(column).toStrictEqual([2, 6, 10, 14]);
-    column = sudoku.getColumn(3).map((cell) => cell.value);
+    column = sudoku.columns[3].cells.map((cell) => cell.value);
     expect(column).toStrictEqual([3, 7, 11, 15]);
   });
 
   it("can get the correct square (4x4)", () => {
     const sudoku = generateSudoku(4);
-    let square = sudoku.getSquare(0).map((cell) => cell.value);
+    let square = sudoku.squares[0].cells.map((cell) => cell.value);
     expect(square).toStrictEqual([0, 1, 4, 5]);
-    square = sudoku.getSquare(1).map((cell) => cell.value);
+    square = sudoku.squares[1].cells.map((cell) => cell.value);
     expect(square).toStrictEqual([2, 3, 6, 7]);
-    square = sudoku.getSquare(2).map((cell) => cell.value);
+    square = sudoku.squares[2].cells.map((cell) => cell.value);
     expect(square).toStrictEqual([8, 9, 12, 13]);
-    square = sudoku.getSquare(3).map((cell) => cell.value);
+    square = sudoku.squares[3].cells.map((cell) => cell.value);
     expect(square).toStrictEqual([10, 11, 14, 15]);
   });
 
   it("records correct stats for each value (4x4)", () => {
     const sudoku = generateSudoku(4);
-    const stats = sudoku.getStats();
+    const stats = sudoku.stats;
     expect(
       stats.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     ).toBe(16);
@@ -142,27 +154,24 @@ describe("Sudoku", () => {
     const expectedStats = sudoku9x9_1.expectedStats;
 
     expect(
-    expectedStats.reduce(
+      expectedStats.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
         0
-    )
+      )
     ).toBe(sudoku.cells.length);
 
-    const stats = sudoku.getStats();
+    const stats = sudoku.stats;
     expect(
-    stats.reduce(
-        (accumulator, currentValue) => accumulator + currentValue,
-        0
-    )
+      stats.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     ).toBe(81);
     expect(stats).toStrictEqual(expectedStats);
 
     for (let i = 0; i != 9; i++) {
-      let row = sudoku.getRow(i).map((cell) => cell.value);
+      let row = sudoku.rows[i].cells.map((cell) => cell.value);
       expect(row).toStrictEqual(expectedRows[i]);
-      let column = sudoku.getColumn(i).map((cell) => cell.value);
+      let column = sudoku.columns[i].cells.map((cell) => cell.value);
       expect(column).toStrictEqual(expectedCols[i]);
-      let square = sudoku.getSquare(i).map((cell) => cell.value);
+      let square = sudoku.squares[i].cells.map((cell) => cell.value);
       expect(square).toStrictEqual(expectedSquares[i]);
     }
   });

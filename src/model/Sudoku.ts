@@ -1,47 +1,19 @@
 import { setBit, resetBit, testBit } from "../utils/BitUtils";
+import { Cell } from "./Cell";
+import { CellArray } from "./CellArray";
 
-type Cell = {
-  value: number;
-  annotations: number;
-  // this is derived data, but convenient to cache in each Cell
-  row: number;
-  column: number;
-  // exclusions: number;
-};
-
-type CellArray = Array<Cell>; // TODO, stats for row, col, square? eg: number of 0's
-
-function findNonEmptyCells(array: CellArray) {
-  return array.filter((cell) => cell.value !== 0);
-}
-
-function findEmptyCells(array: CellArray) {
-    return array.filter((cell) => cell.value === 0);
-}
-
-function findUsedValues(array: CellArray) {
-    return findNonEmptyCells(array).map(cell => cell.value);
-}
-
-function ascendingIntegers(count: number): number[] {
-    return Array.from({ length: count }, (_, index) => index + 1);
-}
-
-function findMissingValues(array: CellArray, size: number) {
-    let result = ascendingIntegers(size);
-    let used = findUsedValues(array);
-    return result.filter(value => !used.includes(value));
-}
 
 export class Sudoku {
-  size: number;
-  cells: CellArray | undefined;
+  readonly size: number;
+  cells: Array<Cell> | undefined; // TODO make this a number array
 
-  private side: number;
-  private rows: Array<CellArray> | undefined;
-  private columns: Array<CellArray> | undefined;
-  private squares: Array<CellArray> | undefined;
-  private stats: Array<number> | undefined;
+  // derived data--we should be able to discard all this and regenerate it with our logic
+  // move it into a separate class?
+  readonly side: number;
+  rows: Array<CellArray> | undefined;
+  columns: Array<CellArray> | undefined;
+  squares: Array<CellArray> | undefined;
+  stats: Array<number> | undefined;
 
   validateIndex(index: number) {
     if (index < 0 || index >= this.size) {
@@ -82,13 +54,13 @@ export class Sudoku {
       throw new Error("Sudoku not initialized!");
     }
 
-    this.rows = new Array<CellArray>(this.size);
-    this.columns = new Array<CellArray>(this.size);
-    this.squares = new Array<CellArray>(this.size);
+    this.rows = [];
+    this.columns = [];
+    this.squares = [];
     for (let i = 0; i != this.size; i++) {
-      this.rows[i] = new Array<Cell>(this.size);
-      this.columns[i] = new Array<Cell>(this.size);
-      this.squares[i] = new Array<Cell>(this.size);
+      this.rows.push(new CellArray(this.size));
+      this.columns.push(new CellArray(this.size));
+      this.squares.push(new CellArray(this.size));
     }
     const bufferSize = this.size * this.size;
     const maxNumber = strictSize ? this.size : bufferSize; // for testing
@@ -104,9 +76,9 @@ export class Sudoku {
       const cell = this.cells[i];
       cell.row = row;
       cell.column = column;
-      this.rows[row][column] = cell;
-      this.columns[column][row] = cell;
-      this.squares[square][squareIndex] = cell;
+      this.rows[row].cells[column] = cell;
+      this.columns[column].cells[row] = cell;
+      this.squares[square].cells[squareIndex] = cell;
       this.stats[cell.value]++;
 
       column++;
@@ -131,28 +103,28 @@ export class Sudoku {
   annotateSingles() {
     for (let i = 0; i != this.size; i++) {
       const row = this.rows[i];
-      let emptyCells = findEmptyCells(row);
+      let emptyCells = row.findEmptyCells();
       if (emptyCells.length === 1) {
         const cell = emptyCells[0];
-        const missingValues = findMissingValues(row, this.size);
+        const missingValues = row.findMissingValues();
         cell.annotations = setBit(cell.annotations, missingValues[0]);
         console.log(`single found in row ${i}, column: ${cell.column}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
       }
 
       const column = this.columns[i];
-      emptyCells = findEmptyCells(column);
+      emptyCells = column.findEmptyCells();
       if (emptyCells.length === 1) {
         const cell = emptyCells[0];
-        const missingValues = findMissingValues(column, this.size);
+        const missingValues = column.findMissingValues();
         cell.annotations = setBit(cell.annotations, missingValues[0]);
         console.log(`single found in column ${i}, row: ${cell.row}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
       }
 
       const square = this.squares[i];
-      emptyCells = findEmptyCells(square);
+      emptyCells = square.findEmptyCells();
       if (emptyCells.length === 1) {
         const cell = emptyCells[0];
-        const missingValues = findMissingValues(square, this.size);
+        const missingValues = square.findMissingValues();
         cell.annotations = setBit(cell.annotations, missingValues[0]);
         console.log(`single found in square ${i}, row: ${cell.row}, column ${cell.column}, value: ${missingValues[0]} => bitflags ${cell.annotations}`);
       }
@@ -160,24 +132,24 @@ export class Sudoku {
   }
 
   setValue(row: number, column: number, value: number) {
-    const cell = this.rows[row][column];
+    const cell = this.rows[row].cells[column];
     cell.value = value;
     cell.annotations = 0; // clear for this cell
     // TODO flag that annotations need to be updated, eg: row, column, square
   }
 
   setAnnotation(row: number, column: number, value: number) {
-    const cell = this.rows[row][column];
+    const cell = this.rows[row].cells[column];
     cell.annotations = setBit(cell.annotations, value);
   }
 
   clearAnnotation(row: number, column: number, value: number) {
-    const cell = this.rows[row][column];
+    const cell = this.rows[row].cells[column];
     cell.annotations = resetBit(cell.annotations, value);
   }
 
   getAnnotations(row: number, column: number) {
-    const cell = this.rows[row][column];
+    const cell = this.rows[row].cells[column];
     let result = [];
     const max = this.size + 1;
     for (let i = 1; i != max; i++) {
@@ -186,24 +158,5 @@ export class Sudoku {
       }
     }
     return result;
-  }
-
-  getRow(row: number) {
-    this.validateIndex(row);
-    return this.rows[row];
-  }
-
-  getColumn(column: number) {
-    this.validateIndex(column);
-    return this.columns[column];
-  }
-
-  getSquare(square: number) {
-    this.validateIndex(square);
-    return this.squares[square];
-  }
-
-  getStats() {
-    return this.stats;
   }
 }
