@@ -1,6 +1,63 @@
 import '@testing-library/jest-dom'
 import { Sudoku } from "../Sudoku";
 
+type NumberArray = Array<number>;
+
+class SudokuTestData {
+    sudoku: Array<number> | undefined;
+    expectedRows: Array<NumberArray> | undefined;
+    expectedColumns: Array<NumberArray> | undefined;
+    expectedSquares: Array<NumberArray> | undefined;
+};
+
+const sudoku9x9_1: SudokuTestData = {
+    sudoku: [
+        0, 0, 0, 3, 0, 9, 0, 0, 6,
+        9, 1, 0, 6, 0, 5, 3, 0, 0,
+        4, 6, 3, 2, 0, 1, 5, 9, 8,
+        0, 3, 0, 0, 1, 8, 0, 0, 5,
+        0, 0, 0, 0, 3, 0, 0, 0, 0,
+        5, 0, 0, 7, 2, 0, 0, 3, 0,
+        3, 9, 4, 8, 0, 2, 7, 5, 1,
+        0, 0, 7, 4, 0, 3, 0, 6, 2,
+        6, 0, 0, 1, 0, 7, 0, 0, 0
+    ],
+    expectedRows: 
+    [
+        [0, 0, 0, 3, 0, 9, 0, 0, 6],
+        [9, 1, 0, 6, 0, 5, 3, 0, 0],
+        [4, 6, 3, 2, 0, 1, 5, 9, 8], // freebie
+        [0, 3, 0, 0, 1, 8, 0, 0, 5],
+        [0, 0, 0, 0, 3, 0, 0, 0, 0],
+        [5, 0, 0, 7, 2, 0, 0, 3, 0],
+        [3, 9, 4, 8, 0, 2, 7, 5, 1], // freebie
+        [0, 0, 7, 4, 0, 3, 0, 6, 2],
+        [6, 0, 0, 1, 0, 7, 0, 0, 0]
+    ],
+        expectedColumns: [
+            [0, 9, 4, 0, 0, 5, 3, 0, 6],
+            [0, 1, 6, 3, 0, 0, 9, 0, 0],
+            [0, 0, 3, 0, 0, 0, 4, 7, 0],
+            [3, 6, 2, 0, 0, 7, 8, 4, 1],
+            [0, 0, 0, 1, 3, 2, 0, 0, 0],
+            [9, 5, 1, 8, 0, 0, 2, 3, 7],
+            [0, 3, 5, 0, 0, 0, 7, 0, 0],
+            [0, 0, 9, 0, 0, 3, 5, 6, 0],
+            [6, 0, 8, 5, 0, 0, 1, 2, 0]
+        ],
+    expectedSquares: [
+        [0, 0, 0, 9, 1, 0, 4, 6, 3],
+        [3, 0, 9, 6, 0, 5, 2, 0, 1],
+        [0, 0, 6, 3, 0, 0, 5, 9, 8],
+        [0, 3, 0, 0, 0, 0, 5, 0, 0],
+        [0, 1, 8, 0, 3, 0, 7, 2, 0],
+        [0, 0, 5, 0, 0, 0, 0, 3, 0],
+        [3, 9, 4, 0, 0, 7, 6, 0, 0],
+        [8, 0, 2, 4, 0, 3, 1, 0, 7],
+        [7, 5, 1, 0, 6, 2, 0, 0, 0]
+    ]
+};
+
 const generateSudoku = function(size: number) {
     let result = new Sudoku(size);
 
@@ -81,50 +138,10 @@ describe("Sudoku", () => {
     });
 
     it("works for a 9x9 sudoku", () => {
-        const sudoku = importSudoku([
-            0, 0, 0, 3, 0, 9, 0, 0, 6,
-            9, 1, 0, 6, 0, 5, 3, 0, 0,
-            4, 6, 3, 2, 0, 1, 5, 9, 8,
-            0, 3, 0, 0, 1, 8, 0, 0, 5,
-            0, 0, 0, 0, 3, 0, 0, 0, 0,
-            5, 0, 0, 7, 2, 0, 0, 3, 0,
-            3, 9, 4, 8, 0, 2, 7, 5, 1,
-            0, 0, 7, 4, 0, 3, 0, 6, 2,
-            6, 0, 0, 1, 0, 7, 0, 0, 0
-        ]);
-        const expectedRows = [
-            [0, 0, 0, 3, 0, 9, 0, 0, 6],
-            [9, 1, 0, 6, 0, 5, 3, 0, 0],
-            [4, 6, 3, 2, 0, 1, 5, 9, 8], // freebie
-            [0, 3, 0, 0, 1, 8, 0, 0, 5],
-            [0, 0, 0, 0, 3, 0, 0, 0, 0],
-            [5, 0, 0, 7, 2, 0, 0, 3, 0],
-            [3, 9, 4, 8, 0, 2, 7, 5, 1], // freebie
-            [0, 0, 7, 4, 0, 3, 0, 6, 2],
-            [6, 0, 0, 1, 0, 7, 0, 0, 0]
-        ];
-        const expectedCols = [
-            [0, 9, 4, 0, 0, 5, 3, 0, 6],
-            [0, 1, 6, 3, 0, 0, 9, 0, 0],
-            [0, 0, 3, 0, 0, 0, 4, 7, 0],
-            [3, 6, 2, 0, 0, 7, 8, 4, 1],
-            [0, 0, 0, 1, 3, 2, 0, 0, 0],
-            [9, 5, 1, 8, 0, 0, 2, 3, 7],
-            [0, 3, 5, 0, 0, 0, 7, 0, 0],
-            [0, 0, 9, 0, 0, 3, 5, 6, 0],
-            [6, 0, 8, 5, 0, 0, 1, 2, 0]
-        ];
-        const expectedSquares = [
-            [0, 0, 0, 9, 1, 0, 4, 6, 3],
-            [3, 0, 9, 6, 0, 5, 2, 0, 1],
-            [0, 0, 6, 3, 0, 0, 5, 9, 8],
-            [0, 3, 0, 0, 0, 0, 5, 0, 0],
-            [0, 1, 8, 0, 3, 0, 7, 2, 0],
-            [0, 0, 5, 0, 0, 0, 0, 3, 0],
-            [3, 9, 4, 0, 0, 7, 6, 0, 0],
-            [8, 0, 2, 4, 0, 3, 1, 0, 7],
-            [7, 5, 1, 0, 6, 2, 0, 0, 0]
-        ];
+        const sudoku = importSudoku(sudoku9x9_1.sudoku);
+        const expectedRows = sudoku9x9_1.expectedRows;
+        const expectedCols = sudoku9x9_1.expectedColumns;
+        const expectedSquares = sudoku9x9_1.expectedSquares;
 
         const expectedStats = [40, 5, 4, 8, 3, 5, 5, 4, 3, 4];
         expect(expectedStats.reduce((accumulator, currentValue) => accumulator + currentValue, 0)).toBe(81);
@@ -144,17 +161,7 @@ describe("Sudoku", () => {
     });
 
     it("annotates singles in a 9x9 sudoku", () => {
-        const sudoku = importSudoku([
-            0, 0, 0, 3, 0, 9, 0, 0, 6,
-            9, 1, 0, 6, 0, 5, 3, 0, 0,
-            4, 6, 3, 2, 0, 1, 5, 9, 8,
-            0, 3, 0, 0, 1, 8, 0, 0, 5,
-            0, 0, 0, 0, 3, 0, 0, 0, 0,
-            5, 0, 0, 7, 2, 0, 0, 3, 0,
-            3, 9, 4, 8, 0, 2, 7, 5, 1,
-            0, 0, 7, 4, 0, 3, 0, 6, 2,
-            6, 0, 0, 1, 0, 7, 0, 0, 0
-        ]);
+        const sudoku = importSudoku(sudoku9x9_1.sudoku);
 
         sudoku.annotateSingles();
         expect(sudoku.getAnnotations(2, 4)).toStrictEqual([7]);
