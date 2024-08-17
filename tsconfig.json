@@ -20,8 +20,10 @@
     "baseUrl": ".",
     "paths": {
       "@/styles/*": ["src/styles/*"],
+      "@/model/*": ["src/model/*"],
       "@/components/*": ["src/components/*"]
-    }
+    },
+    "types": ["jest", "@testing-library/jest-dom"]
 
   },
   "include": [

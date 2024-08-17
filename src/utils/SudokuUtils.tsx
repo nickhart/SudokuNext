@@ -1,6 +1,6 @@
 import { generateAscendingArray } from "./BoardUtils";
-import { templatesForDifficulty } from "src/model/GameTemplate";
-import { GameState } from "src/model/GameState";
+import { templatesForDifficulty } from "@/model/GameTemplate";
+import { GameState } from "@/model/GameState";
 
 export const countMatchingElements = (arr: number[], target: number): number => {
   return arr.reduce((count, currentElement) => {
