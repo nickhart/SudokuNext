@@ -79,9 +79,14 @@ export const Board: React.FC<{
     size === 4 ? "grid-cols-4" : "grid-cols-9"
   } gap-1 max-w-fit`;
   return (
+    <>
     <div className={gridCss}>
       {Array.from({ length: size * size }).map((_, index) => renderCell(index))}
+      </div>
+      <br/>
+    <div className={gridCss}>
       {Array.from({ length: size }).map((_, index) => renderChoice(index + 1))}
-    </div>
-  );
+      </div>
+      </>
+    );
 };
