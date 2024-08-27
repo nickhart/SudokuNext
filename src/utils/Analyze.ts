@@ -67,3 +67,31 @@ export function canPlay(value, row, col, square) {
     return !(row.includes(value) || col.includes(value) || square.includes(value))
 }
 
+export function findLegalPlays(value, rows, cols, squares) {
+    const possiblePlays = [
+        { row: 0, col: 0, square: 0 },
+        { row: 0, col: 1, square: 0 },
+        { row: 1, col: 0, square: 0 },
+        { row: 1, col: 1, square: 0 },
+        { row: 0, col: 2, square: 1 },
+        { row: 0, col: 3, square: 1 },
+        { row: 1, col: 2, square: 1 },
+        { row: 1, col: 3, square: 1 },
+        { row: 2, col: 0, square: 2 },
+        { row: 2, col: 1, square: 2 },
+        { row: 3, col: 0, square: 2 },
+        { row: 3, col: 1, square: 2 },
+        { row: 2, col: 2, square: 3 },
+        { row: 2, col: 3, square: 3 },
+        { row: 3, col: 2, square: 3 },
+        { row: 3, col: 3, square: 3 }
+    ]
+    let result = []
+    possiblePlays.forEach((play, _) => {
+        const {row, col, square} = play
+        if (canPlay(value, rows[row], cols[col], squares[square])) {
+            result.push(play)
+        }
+    })
+    return result
+}
