@@ -87,6 +87,16 @@ export function newGameForDegree(degree: number): GameState {
   return Array(degree * degree * degree * degree).fill(0);
 }
 
+export function testGameForDegree(degree: number, template: number): GameState {
+  // todo: remember which ones we've played?
+  // generate our own?
+  const templates = templatesForDifficulty(3, degree);
+  if (templates) {
+    return templates[template];
+  }
+  return Array(degree * degree * degree * degree).fill(0);
+}
+
 function cellValuesForRow(row: number, degree: number) {
   const size = degree * degree;
   return generateAscendingArray(size * row, size);

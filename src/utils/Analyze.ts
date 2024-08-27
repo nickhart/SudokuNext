@@ -44,7 +44,7 @@ export function analyzeGameState(gameState: GameState) {
     const squareMap = size === 4 ? squares4x4 : squares9x9
 
     // break the board down by row, column, and squares
-    let rows: number[][] = Array.from({ length: size }, () => []) // .fill(0)
+    let rows: number[][] = Array.from({ length: size }, () => [])
     let cols: number[][] = Array.from({ length: size }, () => [])
     let squares: number[][] = Array.from({ length: size }, () => [])
 
@@ -53,15 +53,17 @@ export function analyzeGameState(gameState: GameState) {
         const col = colMap[index]
         const square = squareMap[index]
         if (value) {
-            assert(!rows[row].includes(value))
-            assert(!cols[col].includes(value))
-            assert(!squares[square].includes(value))
+            assert(canPlay(value, rows[row], cols[col], squares[square]))
         }
         rows[row].push(value)
         cols[col].push(value)
         squares[square].push(value)
     })
-    
 
     return { rows, cols, squares }
 }
+
+export function canPlay(value, row, col, square) {
+    return !(row.includes(value) || col.includes(value) || square.includes(value))
+}
+
