@@ -57,6 +57,6 @@ Visit `http://localhost:3000` to view the app in your browser.
 
 ## License
 
-MIT License
+APACHE 2.0 License
 
 © Nicholas Hart, 2023
