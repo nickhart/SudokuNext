@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import {
-  newGameForDegree,
-  isGameOver,
-  isLegalPlay,
-} from "../utils/SudokuUtils";
-import { Board } from "./Board";
-import { GameState } from "../model/GameState";
+import { newGameForDegree, isGameOver, isLegalPlay } from '../utils/SudokuUtils';
+import { Board } from './Board';
+import { GameState } from '../model/GameState';
 
 interface HistoryStep {
   cells: GameState;
 }
 
 export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
-  const [history, setHistory] = useState<HistoryStep[]>([
-    { cells: newGameForDegree(startDegree) },
-  ]);
+  const [history, setHistory] = useState<HistoryStep[]>([{ cells: newGameForDegree(startDegree) }]);
   const [degree, setDegree] = useState(startDegree);
   const [stepNumber, setStepNumber] = useState(0);
   const [currentNumber, setCurrentNumber] = useState(0);
@@ -31,12 +25,12 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     // }
 
     if (cells[index] === currentNumber) {
-      console.log("ignoring: input is unchanged");
+      console.log('ignoring: input is unchanged');
       return;
     }
 
     if (!isLegalPlay(cells, index, currentNumber, degree)) {
-      console.log("ignoring: not a legal play");
+      console.log('ignoring: not a legal play');
       return;
     }
 
@@ -62,10 +56,12 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const gameOver = isGameOver(current.cells);
 
   const moves = history.map((step: HistoryStep, move: React.Key) => {
-    const desc = move ? "Go to move #" + move : "Go to game start";
+    const desc = move ? 'Go to move #' + move : 'Go to game start';
     return (
       <li key={move}>
-        <button className="m-1 bg-gray-400 p-2" onClick={() => jumpTo(Number(move))}>{desc}</button>
+        <button className="m-1 bg-gray-400 p-2" onClick={() => jumpTo(Number(move))}>
+          {desc}
+        </button>
       </li>
     );
   });
@@ -74,32 +70,42 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     stepNumber === 0 ? (
       <div className="m-2">
         change board:
-        <button className="m-1 size-10 bg-gray-400 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
-        <button className="m-1 size-10 bg-gray-400 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
+        <button
+          className="m-1 size-10 bg-gray-400 p-2"
+          key="degree.2"
+          onClick={() => changeDegree(2)}
+        >
+          4x4
+        </button>
+        <button
+          className="m-1 size-10 bg-gray-400 p-2"
+          key="degree.3"
+          onClick={() => changeDegree(3)}
+        >
+          9x9
+        </button>
       </div>
     ) : (
-      ""
+      ''
     );
 
   let status;
   if (gameOver) {
-    status = "Winner!";
+    status = 'Winner!';
   } else {
-    status = "current number: " + currentNumber;
+    status = 'current number: ' + currentNumber;
   }
 
   return (
     <div className="m-10">
-        <Board
-          cells={current.cells}
-          degree={degree}
-          currentNumber={currentNumber}
-          onCellClick={(i) => handleCellClick(i)}
-          onChoiceClick={(i) => setCurrentNumber(i)}
-        />
-      <div>
-        {degrees}
-      </div>
+      <Board
+        cells={current.cells}
+        degree={degree}
+        currentNumber={currentNumber}
+        onCellClick={i => handleCellClick(i)}
+        onChoiceClick={i => setCurrentNumber(i)}
+      />
+      <div>{degrees}</div>
       <div>
         <div>{status}</div>
         <ol>{moves}</ol>

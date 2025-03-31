@@ -1,7 +1,7 @@
 export function generateAscendingArray(
   start: number,
   length: number,
-  multiple: number = 1
+  multiple: number = 1,
 ): number[] {
   const result: number[] = [];
   for (let i = 0; i < length; i++) {

@@ -1,6 +1,6 @@
-import { generateAscendingArray } from "./BoardUtils";
-import { templatesForDifficulty } from "@/model/GameTemplate";
-import { GameState } from "@/model/GameState";
+import { generateAscendingArray } from './BoardUtils';
+import { templatesForDifficulty } from '@/model/GameTemplate';
+import { GameState } from '@/model/GameState';
 
 export const countMatchingElements = (arr: number[], target: number): number => {
   return arr.reduce((count, currentElement) => {
@@ -13,7 +13,7 @@ export const countMatchingElements = (arr: number[], target: number): number => 
 
 export function choicesForDegree(degree: number): Array<number> {
   const length = degree * degree;
-  return Array.from({ length }, (_, index) => index+1);
+  return Array.from({ length }, (_, index) => index + 1);
 }
 
 function rowAndColumnFromIndex(index: number, degree: number) {
@@ -27,7 +27,7 @@ export function isLegalPlay(
   cells: Array<number>,
   i: number,
   choice: number,
-  degree: number
+  degree: number,
 ): boolean {
   if (!choice) {
     // can always clear?
@@ -40,13 +40,13 @@ export function isLegalPlay(
 
   const { row, col } = rowAndColumnFromIndex(i, degree);
   const rowValues = cellValuesForRow(row, degree);
-  const rowNumbers = rowValues.map((value) => cells[value]);
+  const rowNumbers = rowValues.map(value => cells[value]);
   if (rowNumbers.includes(choice)) {
     console.log(`number ${choice} is already in row ${row} (${rowNumbers})`);
     return false;
   }
   const colValues = cellValuesForColumn(col, degree);
-  const colNumbers = colValues.map((value) => cells[value]);
+  const colNumbers = colValues.map(value => cells[value]);
   if (colNumbers.includes(choice)) {
     console.log(`number ${choice} is already in column ${col} (${colNumbers})`);
     return false;
@@ -62,10 +62,10 @@ export function isLegalPlay(
   // square 2,0 x 3,1 = [8, 9, 12, 13]
   // square 2,2 x 3,3 = [10, 11, 14, 15]
   const squareValues = cellValuesForSquare(row, col, degree);
-  const squareNumbers = squareValues.map((value) => cells[value]);
+  const squareNumbers = squareValues.map(value => cells[value]);
   if (squareNumbers.includes(choice)) {
     console.log(
-      `number ${choice} is already in sqaure containing cell ${row},${col} (${squareNumbers})`
+      `number ${choice} is already in sqaure containing cell ${row},${col} (${squareNumbers})`,
     );
     return false;
   }
