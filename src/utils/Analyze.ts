@@ -44,9 +44,9 @@ export function analyzeGameState(gameState: GameState) {
     const squareMap = size === 4 ? squares4x4 : squares9x9
 
     // break the board down by row, column, and squares
-    let rows: number[][] = Array.from({ length: size }, () => [])
-    let cols: number[][] = Array.from({ length: size }, () => [])
-    let squares: number[][] = Array.from({ length: size }, () => [])
+    const rows: number[][] = Array.from({ length: size }, () => [])
+    const cols: number[][] = Array.from({ length: size }, () => [])
+    const squares: number[][] = Array.from({ length: size }, () => [])
 
     gameState.forEach((value, index) => {
         const row = rowMap[index]
@@ -86,7 +86,7 @@ export function findLegalPlays(value, rows, cols, squares) {
         { row: 3, col: 2, square: 3 },
         { row: 3, col: 3, square: 3 }
     ]
-    let result = []
+    const result = []
     possiblePlays.forEach((play, _) => {
         const {row, col, square} = play
         if (canPlay(value, rows[row], cols[col], squares[square])) {

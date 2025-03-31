@@ -12,7 +12,7 @@ export function generateAscendingArray(
 
 // todo: refactor this
 export function rowValuesForDegree(degree: number) {
-  let result = [];
+  const result = [];
   const size = degree * degree;
   for (let i = 0; i < size; i++) {
     result.push(generateAscendingArray(i * size, size));
