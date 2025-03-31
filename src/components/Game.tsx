@@ -6,6 +6,7 @@ import {
   isLegalPlay,
 } from "../utils/SudokuUtils";
 import { Board } from "./Board";
+import { Difficulty } from "../model/GameTemplate";
 
 export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   // replace history with a game tree

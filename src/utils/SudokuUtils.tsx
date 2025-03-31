@@ -78,11 +78,10 @@ export function isGameOver(cells: Array<number>): boolean {
 }
 
 export function newGameForDegree(degree: number): GameState {
-  // todo: remember which ones we've played?
-  // generate our own?
   const templates = templatesForDifficulty(3, degree);
-  if (templates) {
-    return getRandomElement(templates);
+  if (templates && templates.length > 0) {
+    // Always use the first template to ensure server/client match
+    return templates[0];
   }
   return Array(degree * degree * degree * degree).fill(0);
 }

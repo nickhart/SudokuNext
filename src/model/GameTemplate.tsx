@@ -1,7 +1,6 @@
 import { GameState } from "./GameState";
 
-
-enum Difficulty {
+export enum Difficulty {
     Easy,
     Medium,
     Hard,
