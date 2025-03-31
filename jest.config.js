@@ -1,4 +1,5 @@
-module.exports = {
+/**** eslint-env node */
+export default {
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
     setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
@@ -10,4 +11,3 @@ module.exports = {
       '^.+\\.tsx?$': 'ts-jest',
     },
   };
-  

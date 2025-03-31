@@ -1,6 +1,5 @@
 import React from "react";
 import { Cell } from "./Cell";
-import { rowValuesForDegree } from "../utils/BoardUtils";
 import { GameState } from "../model/GameState";
 import { isLegalPlay, countMatchingElements } from "src/utils/SudokuUtils";
 
@@ -19,8 +18,6 @@ const weights9x9: Array<number> = [
 ];
 
 function weightForIndex(index: number, degree: number): number {
-  const size = degree * degree;
-
   switch (degree) {
     case 2: return weights4x4[index];
     case 3: return weights9x9[index];
@@ -58,7 +55,7 @@ export const Board: React.FC<{
   function renderChoice(index: number) {
     const key = `choice.${index}`;
     const countInUse = countMatchingElements(cells, index);
-    const canClick = (countInUse < size) && (currentNumber !== index);
+    const canClick = (countInUse < degree * degree) && (currentNumber !== index);
     return (
       <Cell
         value={index}
@@ -72,20 +69,18 @@ export const Board: React.FC<{
     );
   }
 
-  const rowValues = rowValuesForDegree(degree);
-  const size = degree * degree;
   // todo: fix the variable grid sizing... this was totally breaking when trying to format the css string
   const gridCss = `grid ${
-    size === 4 ? "grid-cols-4" : "grid-cols-9"
+    degree * degree === 4 ? "grid-cols-4" : "grid-cols-9"
   } gap-1 max-w-fit`;
   return (
     <>
     <div className={gridCss}>
-      {Array.from({ length: size * size }).map((_, index) => renderCell(index))}
+      {Array.from({ length: degree * degree }).map((_, index) => renderCell(index))}
       </div>
       <br/>
     <div className={gridCss}>
-      {Array.from({ length: size }).map((_, index) => renderChoice(index + 1))}
+      {Array.from({ length: degree * degree }).map((_, index) => renderChoice(index + 1))}
       </div>
       </>
     );
