@@ -7,10 +7,14 @@ import {
 } from "../utils/SudokuUtils";
 import { Board } from "./Board";
 import { Difficulty } from "../model/GameTemplate";
+import { GameState } from "../model/GameState";
+
+interface HistoryStep {
+  cells: GameState;
+}
 
 export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
-  // replace history with a game tree
-  const [history, setHistory] = useState([
+  const [history, setHistory] = useState<HistoryStep[]>([
     { cells: newGameForDegree(startDegree) },
   ]);
   // replace with a pointer to the current place in the tree
@@ -64,11 +68,11 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const current = history[stepNumber];
   const gameOver = isGameOver(current.cells);
 
-  const moves = history.map((step: any, move: React.Key) => {
+  const moves = history.map((step: HistoryStep, move: React.Key) => {
     const desc = move ? "Go to move #" + move : "Go to game start";
     return (
       <li key={move}>
-        <button className="bg-gray-400 m-1 p-2" onClick={() => jumpTo(Number(move))}>{desc}</button>
+        <button className="m-1 bg-gray-400 p-2" onClick={() => jumpTo(Number(move))}>{desc}</button>
       </li>
     );
   });
@@ -77,8 +81,8 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     stepNumber === 0 ? (
       <div className="m-2">
         change board:
-        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
-        <button className="w-10 h-10 bg-gray-400 m-1 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
+        <button className="m-1 size-10 bg-gray-400 p-2" key="degree.2" onClick={() => changeDegree(2)}>4x4</button>
+        <button className="m-1 size-10 bg-gray-400 p-2" key="degree.3" onClick={() => changeDegree(3)}>9x9</button>
       </div>
     ) : (
       ""

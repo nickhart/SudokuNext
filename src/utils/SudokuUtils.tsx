@@ -18,8 +18,8 @@ export function choicesForDegree(degree: number): Array<number> {
 
 function rowAndColumnFromIndex(index: number, degree: number) {
   const size = degree * degree;
-  let col = index % size;
-  let row = (index - col) / size;
+  const col = index % size;
+  const row = (index - col) / size;
   return { row: row, col: col };
 }
 
