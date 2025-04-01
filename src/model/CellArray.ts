@@ -1,4 +1,4 @@
-import { Cell } from "./Cell";
+import { Cell } from './Cell';
 
 function ascendingIntegers(size: number): number[] {
   return Array.from({ length: size }, (_, index) => index + 1);

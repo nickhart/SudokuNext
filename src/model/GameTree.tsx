@@ -1,5 +1,5 @@
-import { Tree, TreeNode } from "./TreeNode";
-import { GameState } from "./GameState";
+import { Tree, TreeNode } from './TreeNode';
+import { GameState } from './GameState';
 
 // need some kind of interface for the GameState?
 

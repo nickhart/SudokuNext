@@ -1,7 +1,6 @@
-import { setBit, resetBit, testBit } from "../utils/BitUtils";
-import { Cell } from "./Cell";
-import { CellArray } from "./CellArray";
-
+import { setBit, resetBit, testBit } from '../utils/BitUtils';
+import { Cell } from './Cell';
+import { CellArray } from './CellArray';
 
 export class Sudoku {
   readonly size: number;
@@ -18,9 +17,7 @@ export class Sudoku {
 
   validateIndex(index: number) {
     if (index < 0 || index >= this.size) {
-      throw new Error(
-        `Sudoku index must be between 0 and ${this.size}, not ${index}`
-      );
+      throw new Error(`Sudoku index must be between 0 and ${this.size}, not ${index}`);
     }
   }
 
@@ -52,7 +49,7 @@ export class Sudoku {
   // TODO: better name for this?
   updateDerivedData(strictSize: boolean = true) {
     if (!this.cells) {
-      throw new Error("Sudoku not initialized!");
+      throw new Error('Sudoku not initialized!');
     }
 
     this.rows = [];
@@ -93,9 +90,7 @@ export class Sudoku {
         squareIndex = (row % this.side) * this.side; // eg: start at 0, 3, 6
         square++; // next square
         if (square % this.side === 0) {
-          square =
-            Math.floor(column / this.side) +
-            Math.floor(row / this.side) * this.side;
+          square = Math.floor(column / this.side) + Math.floor(row / this.side) * this.side;
         }
       }
     }
@@ -105,7 +100,6 @@ export class Sudoku {
       this.columns[i].updateDerivedData();
       this.squares[i].updateDerivedData();
     }
-
   }
 
   annotateSingles() {

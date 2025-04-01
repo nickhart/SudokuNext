@@ -1,11 +1,11 @@
 import { GameState } from './GameState';
 
 export enum Difficulty {
-    Easy,
-    Medium,
-    Hard,
-    Evil,
-};
+  Easy,
+  Medium,
+  Hard,
+  Evil,
+}
 
 // annoyingly hand copied from https://sudokutodo.com/generator
 

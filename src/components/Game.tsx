@@ -17,7 +17,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
 
   // rename this--placeNumberInCell()? Also at some point we'll need a function to mark a number
   function handleCellClick(index: number) {
-    // this stuff is going to look more like traversing part of the 
+    // this stuff is going to look more like traversing part of the
     const localHistory = history.slice(0, stepNumber + 1);
     const current = localHistory[stepNumber]; //  history.length - 1
     const cells = current.cells.slice(); // making a copy of cells

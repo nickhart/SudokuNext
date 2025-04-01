@@ -15,15 +15,9 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/src/*": [
-        "src/*"
-      ],
-      "@/styles/*": [
-        "src/styles/*"
-      ],
-      "@/components/*": [
-        "src/components/*"
-      ]
+      "@/src/*": ["src/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/components/*": ["src/components/*"]
     },
     "target": "ES2017",
     "types": ["jest", "@testing-library/jest-dom"]

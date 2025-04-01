@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from 'assert';
 
 export class TreeNode<T> {
   value: T;
@@ -36,10 +36,9 @@ export class Tree<T> {
   addRoot(value: T) {
     assert(this.root === undefined);
     if (this.root === undefined) {
-        this.root = new TreeNode(value);
-        return true;
+      this.root = new TreeNode(value);
+      return true;
     }
     return false;
   }
-
 }
