@@ -5,8 +5,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.1-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![pnpm](https://img.shields.io/badge/pnpm-8.15.4-orange?logo=pnpm)](https://pnpm.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://github.com/nickhart/sudoku/actions/workflows/test.yml/badge.svg)](https://github.com/nickhart/sudoku/actions/workflows/test.yml)
-[![Deploy](https://github.com/nickhart/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/nickhart/sudoku/actions/workflows/deploy.yml)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://vercel.com)
+[![Vercel Status](https://img.shields.io/badge/Status-Passing-green?logo=vercel)](https://vercel.com)
 
 **This is the first NextJS project I created.** I borrowed a simple JS/React Tic Tac Toe app,
 converted it to Typescript, upgraded it to use NextJS, then mostly rewrote it with an updated
