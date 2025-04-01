@@ -1,62 +1,20 @@
 # Sudoku
 
-A Sudoku puzzle web app built with Next.js and TypeScript. Users can play either a 4x4 or 9x9 Sudoku game, with plans for advanced features like annotations, hints, and automatic solving.
+Copyright Nicholas Hart 2023
 
-## Features
+## Overview
 
-- Switch between 4x4 and 9x9 Sudoku grids
-- Responsive layout styled with Tailwind CSS
-- Clean and minimal interface
+Started with an example React tic-tac-toe app, converted it to typescript, turned it into a sudoku game, and then:
 
-## Planned Enhancements
+- ability to switch between a 4x4 and 9x9 grid
+- added tailwindcss and cleaned up css
 
-- Game templates for partially filled puzzles
-- Improved hover states for interactivity
-- Alternate color palettes
-- Conflict/error/constraint highlighting
-- Annotations (pencil marks)
-- Hint system
-- Auto-play via annotations
+## TODO
 
-## Tech Stack
-
-- [Next.js](https://nextjs.org/)
-- [React](https://reactjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18 or later)
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/nickhart/sudoku.git
-cd sudoku
-
-# Install dependencies
-npm install
-# or
-yarn install
-```
-
-### Running the Development Server
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Visit `http://localhost:3000` to view the app in your browser.
-
-## License
-
-APACHE 2.0 License
-
-© Nicholas Hart, 2023
+- templates (enabled partially-filled games)
+- hover states--disable if not clickable
+- more color palattes?
+- show conflicts/errors/contraints?
+- annotations
+- hints
+- auto-play (via correct annotations)

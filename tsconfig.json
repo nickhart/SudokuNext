@@ -15,10 +15,11 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
+      "@/src/*": ["src/*"],
       "@/styles/*": ["src/styles/*"],
-      "@/model/*": ["src/model/*"],
       "@/components/*": ["src/components/*"]
     },
+    "target": "ES2017",
     "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

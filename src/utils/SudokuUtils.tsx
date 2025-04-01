@@ -1,6 +1,6 @@
-import { generateAscendingArray } from './BoardUtils';
-import { templatesForDifficulty } from '@/model/GameTemplate';
-import { GameState } from '@/model/GameState';
+import { generateAscendingArray } from '@/src/utils/BoardUtils';
+import { templatesForDifficulty } from '@/src/model/GameTemplate';
+import { GameState } from '@/src/model/GameState';
 
 export const countMatchingElements = (arr: number[], target: number): number => {
   return arr.reduce((count, currentElement) => {
@@ -78,21 +78,10 @@ export function isGameOver(cells: Array<number>): boolean {
 }
 
 export function newGameForDegree(degree: number): GameState {
-  // todo: remember which ones we've played?
-  // generate our own?
-  const templates = templatesForDifficulty(3, degree);
-  if (templates) {
-    return getRandomElement(templates);
-  }
-  return Array(degree * degree * degree * degree).fill(0);
-}
-
-export function testGameForDegree(degree: number, template: number): GameState {
-  // todo: remember which ones we've played?
-  // generate our own?
-  const templates = templatesForDifficulty(3, degree);
-  if (templates) {
-    return templates[template];
+  const templates = templatesForDifficulty(0, degree);
+  if (templates && templates.length > 0) {
+    // Always use the first template to ensure server/client match
+    return templates[0];
   }
   return Array(degree * degree * degree * degree).fill(0);
 }

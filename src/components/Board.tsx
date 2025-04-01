@@ -22,7 +22,7 @@ function weightForIndex(index: number, degree: number): number {
 }
 
 export const Board: React.FC<{
-  degree: number;
+  degree: number; // eg: 2 or 3
   cells: GameState;
   currentNumber: number;
   onCellClick: (index: number) => void;
@@ -63,17 +63,18 @@ export const Board: React.FC<{
     );
   }
 
-  // todo: fix the variable grid sizing... this was totally breaking when trying to format the css string
-  const gridCss = `grid ${degree * degree === 4 ? 'grid-cols-4' : 'grid-cols-9'} gap-1 max-w-fit`;
+  const gridSize = degree * degree;
+  const gridCss = `grid gap-1 w-fit`;
+  const gridStyle = { gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))` };
   return (
-    <>
-      <div className={gridCss}>
-        {Array.from({ length: degree * degree }).map((_, index) => renderCell(index))}
+    <div className="flex flex-col">
+      <div className={gridCss} style={gridStyle}>
+        {Array.from({ length: gridSize * gridSize }).map((_, index) => renderCell(index))}
       </div>
       <br />
-      <div className={gridCss}>
-        {Array.from({ length: degree * degree }).map((_, index) => renderChoice(index + 1))}
+      <div className={gridCss} style={gridStyle}>
+        {Array.from({ length: gridSize }).map((_, index) => renderChoice(index + 1))}
       </div>
-    </>
+    </div>
   );
 };

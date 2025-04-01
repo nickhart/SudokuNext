@@ -10,11 +10,13 @@ interface HistoryStep {
 
 export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
   const [history, setHistory] = useState<HistoryStep[]>([{ cells: newGameForDegree(startDegree) }]);
-  const [degree, setDegree] = useState(startDegree);
   const [stepNumber, setStepNumber] = useState(0);
+  const [degree, setDegree] = useState(startDegree);
   const [currentNumber, setCurrentNumber] = useState(0);
 
+  // rename this--placeNumberInCell()? Also at some point we'll need a function to mark a number
   function handleCellClick(index: number) {
+    // this stuff is going to look more like traversing part of the
     const localHistory = history.slice(0, stepNumber + 1);
     const current = localHistory[stepNumber]; //  history.length - 1
     const cells = current.cells.slice(); // making a copy of cells
@@ -39,6 +41,7 @@ export const Game: React.FC<{ startDegree: number }> = ({ startDegree }) => {
     setStepNumber(localHistory.length);
   }
 
+  // instead of a number pass a pointer to a node in the tree
   function jumpTo(step: number) {
     setStepNumber(step);
     setCurrentNumber(0); // reset the selected number when jumping steps
