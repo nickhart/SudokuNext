@@ -4,7 +4,7 @@
  */
 
 /** @type {import('jest').Config} */
-export default {
+const config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
@@ -16,3 +16,5 @@ export default {
     '^.+\\.tsx?$': 'ts-jest',
   },
 };
+
+module.exports = config;
