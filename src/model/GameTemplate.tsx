@@ -1,11 +1,6 @@
 import { GameState } from './GameState';
 
-export enum Difficulty {
-  Easy,
-  Medium,
-  Hard,
-  Evil,
-}
+export type Difficulty = 0 | 1 | 2 | 3;
 
 // annoyingly hand copied from https://sudokutodo.com/generator
 
@@ -32,6 +27,33 @@ const gameData4x4 = [
   ],
 ];
 
+const gameData9x9 = [
+  [
+    // Easy
+    [0, 0, 0, 3, 0, 9, 0, 0, 6, 9, 1, 0, 6, 0, 5, 3, 0, 0, 4, 6, 3, 2, 0, 1, 5, 9, 8, 0, 3, 0, 0, 1,
+    8, 0, 0, 5, 0, 0, 0, 0, 3, 0, 0, 0, 0, 5, 0, 0, 7, 2, 0, 0, 3, 0, 3, 9, 4, 8, 0, 2, 7, 5, 1, 0,
+    0, 7, 4, 0, 3, 0, 6, 2, 6, 0, 0, 1, 0, 7, 0, 0, 0],
+  ],
+  [
+    // Medium
+    [0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 3, 5, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 0, 1, 0, 3,
+    0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 4, 2, 0, 8, 0, 0, 0, 0, 4, 0, 0, 0, 5, 0, 0, 0,
+    0, 0, 0, 8, 6, 0, 0, 0, 9, 3, 0, 0, 0, 0, 0, 0, 0],
+  ],
+  [
+    // Hard
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 8, 5, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 5, 0,
+    7, 0, 0, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 7, 3, 0,
+    0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 9],
+  ],
+  [
+    // Evil
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+    2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  ],
+];
+
 export function templatesForDifficulty(
   level: Difficulty,
   degree: number,
@@ -39,6 +61,10 @@ export function templatesForDifficulty(
   if (degree === 2) {
     if (level >= 0 && level < gameData4x4.length) {
       return gameData4x4[level];
+    }
+  } else if (degree === 3) {
+    if (level >= 0 && level < gameData9x9.length) {
+      return gameData9x9[level];
     }
   }
   return undefined;

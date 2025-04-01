@@ -78,7 +78,7 @@ export function isGameOver(cells: Array<number>): boolean {
 }
 
 export function newGameForDegree(degree: number): GameState {
-  const templates = templatesForDifficulty(3, degree);
+  const templates = templatesForDifficulty(0, degree);
   if (templates && templates.length > 0) {
     // Always use the first template to ensure server/client match
     return templates[0];

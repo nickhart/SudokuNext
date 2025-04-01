@@ -52,7 +52,7 @@ importers:
         specifier: 18.2.20
         version: 18.2.20
       autoprefixer:
-        specifier: ^10.4.15
+        specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
       babel-jest:
         specifier: ^29.7.0
@@ -88,13 +88,13 @@ importers:
         specifier: ^15.5.0
         version: 15.5.0
       postcss:
-        specifier: ^8.4.28
+        specifier: ^8.5.3
         version: 8.5.3
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
       tailwindcss:
-        specifier: ^3.3.3
+        specifier: ^3.4.17
         version: 3.4.17
       ts-jest:
         specifier: ^29.2.4
