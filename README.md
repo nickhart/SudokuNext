@@ -8,7 +8,20 @@
 [![Tests](https://github.com/nickhart/sudoku/actions/workflows/test.yml/badge.svg)](https://github.com/nickhart/sudoku/actions/workflows/test.yml)
 [![Deploy](https://github.com/nickhart/sudoku/actions/workflows/deploy.yml/badge.svg)](https://github.com/nickhart/sudoku/actions/workflows/deploy.yml)
 
-A modern, responsive Sudoku game built with Next.js, TypeScript, and Tailwind CSS. Play classic 9x9 Sudoku or try the more compact 4x4 variant.
+**This is the first NextJS project I created.** I borrowed a simple JS/React Tic Tac Toe app,
+converted it to Typescript, upgraded it to use NextJS, then mostly rewrote it with an updated
+model, Board, Cell, and Game components in order to make a Sudoku game--while still preserving
+the ability to go back to a previous state (which seems kinda handy for a Sudoku game that
+doesn't prevent one from making an incorrect move).
+
+As an experiment one can switch to a 4x4 grid which is pretty trivial to solve, but I
+thought it would be interesting and possibly make it easy to test.
+
+I used [Cursor](https://www.cursor.com) to help update dependencies, do some project cleanup,
+and make the README a little spiffier. **But the code was 100% human.** Before Cursor it would
+take a lot of googling to solve minor issues with various module and project configuration
+problems. In the span of an hour it took my 15 month old project and brought it up to date! 🚀
+
 
 ## Features
 
