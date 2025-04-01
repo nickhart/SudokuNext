@@ -22,7 +22,6 @@ and make the README a little spiffier. **But the code was 100% human.** Before C
 take a lot of googling to solve minor issues with various module and project configuration
 problems. In the span of an hour it took my 15 month old project and brought it up to date! 🚀
 
-
 ## Features
 
 - 🎮 Two grid sizes: 4x4 and 9x9
