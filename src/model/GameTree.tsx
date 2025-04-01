@@ -3,19 +3,22 @@ import { GameState } from './GameState';
 
 // need some kind of interface for the GameState?
 
-class GameTreeNode extends TreeNode<GameState> {
+export class GameTreeNode extends TreeNode<GameState> {
   enumerateChoices() {
     // this is where we need game-specific knowledge
     return [];
   }
 
   expand() {
-    for (let choice in this.enumerateChoices()) {
-      let child = new GameTreeNode(this.value);
-      // transform the child with the choice
+    const choices = this.enumerateChoices();
+    for (const choice of choices) {
+      const child = new GameTreeNode(this.value);
+      // Apply the choice to transform the child's state
+      child.value = [...this.value];  // Create a copy of the current state
+      // TODO: Apply the choice to modify child.value
       this.addChild(child);
     }
   }
 }
 
-class GameTree extends Tree<GameState> {}
+export class GameTree extends Tree<GameState> {}

@@ -12,7 +12,7 @@ export class GameData {
     if (degree >= 2 || degree <= 3) {
       this.degree = degree;
       this.dimension = degree * degree;
-      let bufferSize = this.dimension * this.dimension;
+      const bufferSize = this.dimension * this.dimension;
       this.state = new Array<number>(bufferSize);
       this.annotations = new Array<number>(bufferSize);
     } else {
@@ -21,23 +21,20 @@ export class GameData {
   }
 
   stateRow(row: number) {
-    if (row >= 0 && row < this.dimension) {
-    } else {
+    if (row < 0 || row >= this.dimension) {
       throw new Error(`GameData row must be between 0 and ${this.dimension}`);
     }
   }
 
   stateColumn(column: number) {
-    if (column >= 0 && column < this.dimension) {
-    } else {
+    if (column < 0 || column >= this.dimension) {
       throw new Error(`GameData column must be between 0 and ${this.dimension}`);
     }
   }
 
   stateSquare(square: number) {
-    if (square >= 0 && square < this.dimension) {
-    } else {
-      throw new Error(`GameData column must be between 0 and ${this.dimension}`);
+    if (square < 0 || square >= this.dimension) {
+      throw new Error(`GameData square must be between 0 and ${this.dimension}`);
     }
   }
 }

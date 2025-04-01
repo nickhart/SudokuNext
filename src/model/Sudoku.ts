@@ -143,7 +143,7 @@ export class Sudoku {
 
   getAnnotations(row: number, column: number) {
     const cell = this.rows[row].cells[column];
-    let result = [];
+    const result = [];
     const max = this.size + 1;
     for (let i = 1; i != max; i++) {
       if (testBit(cell.annotations, i) !== 0) {

@@ -3,6 +3,12 @@ import ts from 'typescript-eslint';
 import tailwindcss from 'eslint-plugin-tailwindcss';
 
 export default [
+  {
+    ignores: [
+      '.next/**/*',
+      '*.cjs'
+    ]
+  },
   js.configs.recommended,
   ...ts.configs.recommended,
   {

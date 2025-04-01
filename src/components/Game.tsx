@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { newGameForDegree, isGameOver, isLegalPlay } from '../utils/SudokuUtils';
 import { Board } from './Board';
-import { Difficulty } from '../model/GameTemplate';
 import { GameState } from '../model/GameState';
 
 interface HistoryStep {

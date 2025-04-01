@@ -1,4 +1,3 @@
-import { Cell } from '../Cell';
 import { CellArray } from '../CellArray';
 
 describe('CellArray', () => {

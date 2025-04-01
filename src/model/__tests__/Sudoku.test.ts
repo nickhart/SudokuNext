@@ -54,7 +54,7 @@ const sudoku9x9_1: SudokuTestData = {
 };
 
 const generateSudoku = function (size: number) {
-  let result = new Sudoku(size);
+  const result = new Sudoku(size);
 
   // this is not a valid Sudoku grid, but each value is unique!
   const bufferSize = size * size;
@@ -71,7 +71,7 @@ const generateSudoku = function (size: number) {
 
 const importSudoku = function (data: Array<number>) {
   const size = Math.floor(Math.sqrt(data.length));
-  let result = new Sudoku(size);
+  const result = new Sudoku(size);
 
   // this is not a valid Sudoku grid, but each value is unique!
   const bufferSize = size * size;
@@ -159,11 +159,11 @@ describe('Sudoku', () => {
     expect(stats).toStrictEqual(expectedStats);
 
     for (let i = 0; i != 9; i++) {
-      let row = sudoku.rows[i].cells.map(cell => cell.value);
+      const row = sudoku.rows[i].cells.map(cell => cell.value);
       expect(row).toStrictEqual(expectedRows[i]);
-      let column = sudoku.columns[i].cells.map(cell => cell.value);
+      const column = sudoku.columns[i].cells.map(cell => cell.value);
       expect(column).toStrictEqual(expectedCols[i]);
-      let square = sudoku.squares[i].cells.map(cell => cell.value);
+      const square = sudoku.squares[i].cells.map(cell => cell.value);
       expect(square).toStrictEqual(expectedSquares[i]);
     }
   });
