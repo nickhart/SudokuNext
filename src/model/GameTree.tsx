@@ -11,10 +11,10 @@ export class GameTreeNode extends TreeNode<GameState> {
 
   expand() {
     const choices = this.enumerateChoices();
-    for (const choice of choices) {
+    for (const _ of choices) {
       const child = new GameTreeNode(this.value);
       // Apply the choice to transform the child's state
-      child.value = [...this.value];  // Create a copy of the current state
+      child.value = [...this.value]; // Create a copy of the current state
       // TODO: Apply the choice to modify child.value
       this.addChild(child);
     }
